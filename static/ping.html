@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Проверка сервера</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    code { background: #f3f4f7; padding: 2px 6px; border-radius: 6px; }
+    .ok { color: #0a7f2e; }
+    .err { color: #b00020; }
+    .box { border: 1px solid #e0e4ef; border-radius: 10px; padding: 12px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Тестовая страница — сервер работает</h1>
+  <p>Если вы видите эту страницу, HTTP‑сервер запущен и порт доступен.</p>
+
+  <div class="box">
+    <div>
+      Проверка API: <code>/healthz</code>, <code>/api/stocks</code>
+      <div style="margin-top:6px; font-size:13px; color:#555">
+        Если страница открыта файлом (file://), будет автопроверка по адресам 127.0.0.1: [3000, 8010, 8080, 80].<br/>
+        Можно указать вручную в адресной строке параметры: <code>?port=3000</code> или <code>?url=http://127.0.0.1:3000</code>.
+      </div>
+    </div>
+    <pre id="out">Проверка...</pre>
+  </div>
+
+  <script>
+    function qs(name) {
+      const m = new URLSearchParams(location.search).get(name);
+      return m && m.trim();
+    }
+
+    async function tryBase(base) {
+      const out = document.getElementById('out');
+      const r = { base, healthz: null, stocks: null, ok: false, error: null };
+      try {
+        const h = await fetch(base + '/healthz', { cache: 'no-store' });
+        const hjson = await h.json();
+        const s = await fetch(base + '/api/stocks', { cache: 'no-store' });
+        const sjson = await s.json();
+        r.healthz = hjson; r.stocks = sjson; r.ok = true;
+      } catch (e) {
+        r.error = e.message || String(e);
+      }
+      const lines = [
+        `Base: ${base}`,
+        r.ok ? 'OK' : 'FAIL',
+        r.ok ? ('/healthz => ' + JSON.stringify(r.healthz)) : ('error: ' + r.error),
+        r.ok ? ('/api/stocks => ' + JSON.stringify(r.stocks)) : ''
+      ].filter(Boolean);
+      out.textContent += (out.textContent ? '\n\n' : '') + lines.join('\n');
+      out.className = r.ok ? 'ok' : 'err';
+      return r.ok;
+    }
+
+    async function run() {
+      const out = document.getElementById('out');
+      out.textContent = '';
+      const manualUrl = qs('url');
+      const manualPort = qs('port');
+      if (manualUrl) {
+        await tryBase(manualUrl);
+        return;
+      }
+      if (manualPort) {
+        await tryBase('http://127.0.0.1:' + manualPort);
+        return;
+      }
+      // Если открыто через http(s), используем текущий origin
+      if (location.protocol.startsWith('http')) {
+        await tryBase(location.origin);
+        return;
+      }
+      // Иначе (file://) — перебор популярных портов
+      const ports = [3000, 8010, 8080, 80];
+      for (const p of ports) {
+        const ok = await tryBase('http://127.0.0.1:' + p);
+        if (ok) break;
+      }
+    }
+    run();
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Requirements for HPMCut Web Server (FastAPI)
+
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# Database (sqlite3 is built-in with Python)
+
+# CORS and middleware
+aiofiles==23.2.1
+
+# Logging
+python-json-logger==2.0.7
+
+# For requests in healthcheck
+requests==2.31.0
+
+# Warehouse database parsing
+pandas==2.2.0
+openpyxl==3.1.2

@@ -1,0 +1,126 @@
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log
+*.err
+*.out
+logs/
+BotCut/*.err
+BotCut/*.out
+server_fastapi.err
+server_fastapi.out
+
+# Temporary files
+tmp_*
+temp_*
+reference_extracted_images/
+test_extracted_images/
+*.tmp
+nul
+
+# Test artifacts
+TEST_*.html
+test_*.html
+test_generated.*
+test_sample_report.png
+test_threejs_interactive.html
+test_botcut_*.html
+
+# Environment secrets
+.env
+.env.local
+*.env
+BotCut/.env
+
+# Data files
+data/current_server.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+.coverage
+htmlcov/
+
+# Documentation build
+docs/_build/
+
+# ============================================================
+# PUBLIC REPO: Stock_3Dnest — EXCLUDED from public commit
+# ============================================================
+
+# Module 2: 3D Guillotine Cutting Algorithm (Intellectual Property)
+server.py
+
+# Module 2: 3D Cutting Frontend (Intellectual Property)
+static/app.js
+static/index.html
+static/presets.js
+static/vendor/three.module.js
+
+# Module 3: Telegram Bot (Intellectual Property)
+# Only EnvExample.txt and requirements.txt are public
+BotCut/bot.py
+BotCut/handlers.py
+BotCut/main.py
+BotCut/database.py
+BotCut/keyboards.py
+BotCut/state.py
+BotCut/config.py
+BotCut/api_client.py
+BotCut/openai_service.py
+BotCut/pdf_generator.py
+BotCut/visualizer_3d.py
+BotCut/data_processor.py
+BotCut/sheets_parser_fixed.py
+BotCut/threejs_template.py
+BotCut/warehouse_parser.py
+BotCut/warehouse_sync.py
+BotCut/excel_parser_professional.py
+BotCut/excel_parser_advanced.py
+BotCut/import_from_excel.py
+BotCut/init_warehouse.py
+BotCut/RULES_BOT.md
+
+# Warehouse Excel files from 1C (private business data — auto-parsed to SQLite on startup)
+data/warehouse/*.xlsx
+data/warehouse/*.xls
+BotCut/data/warehouse/*.xlsx
+BotCut/data/warehouse/*.xls
+data/StockHPM.xlsx
+data/*.xlsx
+data/*.xls
+
+# SQLite databases (contain business data)
+data/botcut.db
+BotCut/data/botcut.db
+data/stocks.json
+
+# Reference documents (private)
+AlmaCum.pdf
+BotCut/data/
+
+# Internal development rules (private)
+RULES.md
+RULES_MASTER.md

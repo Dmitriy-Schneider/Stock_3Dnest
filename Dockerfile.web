@@ -1,0 +1,37 @@
+# Dockerfile for HPMCut Web Server (FastAPI)
+# Builds the web interface container
+
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements-web.txt ./
+RUN pip install --no-cache-dir -r requirements-web.txt
+
+# Copy application files
+COPY server.py ./
+COPY server_fastapi.py ./
+COPY database.py ./
+COPY warehouse_parser.py ./
+COPY static ./static
+
+# Create data directories for database and warehouse
+RUN mkdir -p /app/data/warehouse
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:3001/health', timeout=5)"
+
+# Run FastAPI server
+CMD ["uvicorn", "server_fastapi:app", "--host", "0.0.0.0", "--port", "3001"]

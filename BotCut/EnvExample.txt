@@ -1,0 +1,73 @@
+# ============================================
+# BotCut - Telegram Bot Configuration
+# ============================================
+# Copy this file to .env and fill in your actual values
+
+# ============================================
+# TELEGRAM BOT
+# ============================================
+# Get your bot token from @BotFather in Telegram
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+
+# Admin user IDs (comma-separated) who can manage the bot
+ADMIN_IDS=123456789,987654321
+
+# ============================================
+# OPENAI API
+# ============================================
+# Get your API key from https://platform.openai.com/api-keys
+OPENAI_API_KEY=sk-your_openai_api_key_here
+
+# Model selection (gpt-4, gpt-4-turbo-preview, gpt-3.5-turbo)
+OPENAI_MODEL=gpt-4
+
+# ============================================
+# DATABASE
+# ============================================
+# Path to SQLite database file
+DB_PATH=./BotCut/data/botcut.db
+
+# ============================================
+# SERVER CONNECTION
+# ============================================
+# URL to the main HPMCut server for calculations
+HPMCUT_API_URL=http://127.0.0.1:3001
+
+# Server timeout in seconds
+HPMCUT_API_TIMEOUT=60
+
+# ============================================
+# BOT BEHAVIOR
+# ============================================
+# Maximum file size for uploads (in MB)
+MAX_FILE_SIZE_MB=50
+
+# Maximum history records to show
+MAX_HISTORY_RECORDS=10
+
+# Default kerf (saw thickness) in millimeters
+DEFAULT_KERF=5.0
+
+# Webhook URL (if using webhook mode instead of polling)
+WEBHOOK_URL=https://your-domain.com/webhook
+
+# ============================================
+# LOGGING
+# ============================================
+# Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+LOG_LEVEL=INFO
+
+# Log file path
+LOG_FILE=./BotCut/logs/botcut.log
+
+# ============================================
+# OPTIONAL: Advanced Settings
+# ============================================
+# Retry attempts for API calls
+API_RETRY_ATTEMPTS=3
+
+# Retry delay in seconds
+API_RETRY_DELAY=2
+
+# Enable debug mode
+DEBUG_MODE=False

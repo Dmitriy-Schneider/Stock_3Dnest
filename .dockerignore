@@ -1,0 +1,78 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+**/__pycache__
+BotCut/__pycache__/
+BotCut/**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+venv
+.venv
+env
+.env.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Documentation
+*.md
+!README.md
+*.pdf
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+temp/
+tmp/
+nul
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Data files (will be mounted as volumes)
+data/*.db
+BotCut/data/*.db
+BotCut/logs/*.log
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Migration scripts (not needed in container)
+migrate_*.py
+extract_*.py
+
+# Analysis reports
+*_ANALYSIS*.md
+*_REPORT*.md
+RULES*.md
+QUICK_START.md
+RECOMMENDATIONS.md

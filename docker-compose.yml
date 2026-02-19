@@ -1,0 +1,71 @@
+# Docker Compose для HPMCut проекта
+# Управляет веб-сервером и Telegram ботом
+
+services:
+  # FastAPI веб-сервер для оптимизации раскроя
+  hpmcut-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: hpmcut-web:latest
+    container_name: hpmcut-web
+    ports:
+      - "3001:3001"
+    volumes:
+      # Подключаем папку с данными для сохранения БД
+      - ./data:/app/data
+      - ./static:/app/static
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    networks:
+      - hpmcut-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:3001/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Telegram бот для взаимодействия с пользователями
+  hpmcut-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    image: hpmcut-bot:latest
+    container_name: hpmcut-bot
+    volumes:
+      # Подключаем папки для сохранения данных и логов
+      - ./BotCut/data:/app/data
+      - ./BotCut/logs:/app/logs
+      - ./BotCut/.env:/app/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - LOG_LEVEL=INFO
+      # API HPMCut сервера (внутри Docker network)
+      - HPMCUT_API_URL=http://hpmcut-web:3001
+      # Database path inside container
+      - DB_PATH=/app/data/botcut.db
+    depends_on:
+      - hpmcut-web
+    restart: unless-stopped
+    networks:
+      - hpmcut-network
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "python main.py"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  hpmcut-network:
+    driver: bridge
+
+volumes:
+  hpmcut-data:
+    driver: local
+  hpmcut-logs:
+    driver: local
