@@ -55,7 +55,6 @@ class WarehouseApp {
 
         // Buttons
         this.btnSearch = document.getElementById('btn-search');
-        this.btnReset = document.getElementById('btn-reset');
         this.btnPrev = document.getElementById('btn-prev');
         this.btnNext = document.getElementById('btn-next');
     }
@@ -71,9 +70,6 @@ class WarehouseApp {
 
         // Search button
         this.btnSearch.addEventListener('click', () => this.performSearch());
-
-        // Reset button
-        this.btnReset.addEventListener('click', () => this.resetFilters());
 
         // Pagination
         this.btnPrev.addEventListener('click', () => this.previousPage());
